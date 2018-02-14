@@ -1,14 +1,20 @@
-﻿using System;
+﻿using NHibernate.Mapping.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace TesteNHibernate01.DB
 {
+	[Class(Table = "pessoas")]
     public class Pessoa
     {
-        public virtual int Id { get; set; }
-        public virtual string Nome { get; set; }
+		[Id(Name = "Id", TypeType = typeof(int))]
+		//[Generator(1, Class = "Identity")]
+		public virtual int Id { get; set; }
+
+		[Property]
+		public virtual string Nome { get; set; }
 
     }
 }

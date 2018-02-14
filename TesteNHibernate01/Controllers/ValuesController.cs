@@ -17,8 +17,8 @@ namespace TesteNHibernate01.Controllers
 			using (var session = NHibernateHelper.OpenSession())
 			//using (var transaction = session.BeginTransaction())
 			{
-				var p = session.Get<Pessoa>(1);
-
+				var p = session.Get<Pessoa>(3);
+				
 				//session.Save(product);
 				//transaction.Commit();
 

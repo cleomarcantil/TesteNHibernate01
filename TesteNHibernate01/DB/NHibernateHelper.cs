@@ -1,5 +1,6 @@
 ﻿using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,10 @@ namespace TesteNHibernate01.DB
                 {
                     var configuration = new Configuration();
                     configuration.Configure();
-                    configuration.AddAssembly(typeof(Pessoa).Assembly);
+					//configuration.AddAssembly(typeof(Program).Assembly);
+
+					AddAttributeMappings(configuration);
+
                     _sessionFactory = configuration.BuildSessionFactory();
                 }
                 return _sessionFactory;
@@ -31,5 +35,15 @@ namespace TesteNHibernate01.DB
             return SessionFactory.OpenSession();
         }
 
-    }
+		private static void AddAttributeMappings(Configuration nhConfiguration)
+		{
+			var hbmSerializer = new HbmSerializer { Validate = true };
+
+			using (var stream = hbmSerializer.Serialize(typeof(Program).Assembly))
+			{
+				nhConfiguration.AddInputStream(stream);
+			}
+		}
+
+	}
 }
