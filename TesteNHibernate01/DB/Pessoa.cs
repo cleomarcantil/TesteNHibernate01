@@ -10,7 +10,7 @@ namespace TesteNHibernate01.DB
     public class Pessoa
     {
 		[Id(Name = "Id", TypeType = typeof(int))]
-		//[Generator(1, Class = "Identity")]
+		[Generator(1, Class = "identity")]
 		public virtual int Id { get; set; }
 
 		[Property]

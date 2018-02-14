@@ -15,15 +15,17 @@ namespace TesteNHibernate01.Controllers
 		public object Get()
 		{
 			using (var session = NHibernateHelper.OpenSession())
-			//using (var transaction = session.BeginTransaction())
+			using (var transaction = session.BeginTransaction())
 			{
+				//var np = new Pessoa() { Nome = "Raquel" };
+				//session.Save(np);
+
 				var p = session.Get<Pessoa>(3);
 				
-				//session.Save(product);
-				//transaction.Commit();
 
+				transaction.Commit();
 
-				return p;
+				return np;
 			}
 
 			//return "ok";
