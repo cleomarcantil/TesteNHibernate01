@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TesteNHibernate01.DB
 {
-	[Class(Table = "pessoas")]
-    public class Pessoa
+	[Class(Table = "pessoas", Lazy = true, Abstract = true)]
+    public abstract class Pessoa
     {
 		[Id(Name = "Id", TypeType = typeof(int))]
 		[Generator(1, Class = "identity")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NHibernate;
 using TesteNHibernate01.DB;
 
 namespace TesteNHibernate01.Controllers
@@ -14,21 +15,50 @@ namespace TesteNHibernate01.Controllers
 		[HttpGet]
 		public object Get()
 		{
+			var rnd = new Random();
+
 			using (var session = NHibernateHelper.OpenSession())
-			using (var transaction = session.BeginTransaction())
+			//using (var transaction = session.BeginTransaction())
 			{
-				//var np = new Pessoa() { Nome = "Raquel" };
-				//session.Save(np);
+				var c = rnd.Next();
+				AddCliente(session, $"Cliente {c}", $"{c, -10}");
 
-				var p = session.Get<Pessoa>(3);
-				
+				var u = rnd.Next();
+				AddUsuario(session, $"Usuário {u}", $"usuario-{u}", $"s{u}");
 
-				transaction.Commit();
+				//var p = session.Get<Pessoa>(3);
+				var ps = session.QueryOver<Pessoa>()
+					.List();
 
-				return np;
+
+				//transaction.Commit();
+
+				return ps;
 			}
 
 			//return "ok";
+		}
+
+		void AddUsuario(ISession session, string nome, string login, string senha)
+		{
+			var p = new Usuario() {
+				Nome = nome,
+				Login = login,
+				Senha = senha,
+			};
+
+			session.Save(p);
+		}
+
+		void AddCliente(ISession session, string nome, string cpf)
+		{
+			var c = new Cliente()
+			{
+				Nome = nome,
+				CPF = cpf,
+			};
+
+			session.Save(c);
 		}
 
 		void teste()

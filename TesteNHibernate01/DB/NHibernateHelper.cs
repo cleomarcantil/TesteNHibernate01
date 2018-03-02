@@ -3,6 +3,7 @@ using NHibernate.Cfg;
 using NHibernate.Mapping.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,8 +40,11 @@ namespace TesteNHibernate01.DB
 		{
 			var hbmSerializer = new HbmSerializer { Validate = true };
 
+			//hbmSerializer.Serialize(typeof(Program).Assembly, "nhmap.xml");
+
 			using (var stream = hbmSerializer.Serialize(typeof(Program).Assembly))
 			{
+				Debug.Write(stream);
 				nhConfiguration.AddInputStream(stream);
 			}
 		}
